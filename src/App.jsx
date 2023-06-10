@@ -43,7 +43,7 @@ function App() {
       else role = "user"
       return { role: role, content: msgObj.message }
     })
-    
+
     try {
       const response = await openai.createChatCompletion({
         model: 'gpt-3.5-turbo',
@@ -68,23 +68,31 @@ function App() {
 
   return (
     <div className='app'>
-      <div style={{ position: "relative", height: "85vh", width: "450px" }}>
+      <div className='chat-container' style={{ position: "relative", height: "75vh", width: "450px" }}>
+        <header className="chat-header">
+          <h4>Chat with GPT</h4>
+        </header>
         <MainContainer>
-          <ChatContainer >
-            <MessageList className='msglist'
-              scrollBehavior='smooth'
-              typingIndicator={typing ? <TypingIndicator content="chatGPT is typing" /> : null}
-            >
-              {messages.map((message, i) => {
-                return <Message key={i} model={message} />
-              })}
+          <ChatContainer>
+            <MessageList className='msglist' scrollBehavior='smooth'>
+              {messages.map((message, i) => (
+                <Message
+                  key={i}
+                  model={{
+                    message: message.message,
+                    sender: message.sender === 'ChatGPT' ? 'assistant' : 'user',
+                    direction: message.direction
+                  }}
+                />
+              ))}
+              {typing && <TypingIndicator content='ChatGPT is typing' />}
             </MessageList>
-            <MessageInput placeholder="Type message here" onSend={handleSend} />
+            <MessageInput placeholder='Type message here' onSend={handleSend} />
           </ChatContainer>
         </MainContainer>
       </div>
     </div>
-  )
+  );
 }
 
 export default App

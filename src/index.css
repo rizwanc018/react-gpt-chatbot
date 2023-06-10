@@ -2,20 +2,129 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
-body {
-  background-color: hsla(240, 100%, 10%);
+body{
+  margin: 0;
 }
 
-.cs-main-container {
-  border-radius: 7px;
+h4{
+  margin: 0;
+}
+
+.app {
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
+  padding-top: 2rem;
+  height: 100vh;
+  background-color: #000;
+}
+
+.chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 25px 10px;
+  background-color: #000000b0;
+  color: #fff;
+  font-size: 24px;
+}
+
+.chat-container {
+  border-radius: 10px;
+  background-color: #fff;
 }
 
 .msglist {
-  background-color: rgb(54, 52, 52);
+  padding: 10px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #000 #f5f5f5;
 }
 
-.cs-chat-container {
+.msglist::-webkit-scrollbar {
+  width: 6px;
+}
+
+.msglist::-webkit-scrollbar-thumb {
+  background-color: #000;
+}
+
+.msglist::-webkit-scrollbar-track {
+  background-color: #f5f5f5;
+}
+
+.typing-indicator {
+  padding: 10px;
+  font-size: 12px;
+  color: #999;
+}
+
+.message-input {
+  padding: 10px;
+  border-top: 1px solid #ccc;
+  background-color: #000;
+}
+
+.message-input input {
+  width: 100%;
+  padding: 8px;
+  border: none;
+  border-radius: 20px;
+  background-color: #f5f5f5;
+  outline: none;
+  font-size: 14px;
+  color: #000;
+}
+
+.message-bubble {
+  padding: 8px 12px;
+  border-radius: 20px;
+}
+
+.user .message-bubble {
+  background-color: #f5f5f5;
+  color: #000;
+  align-self: flex-start;
+  margin-bottom: 8px;
+}
+
+.assistant .message-bubble {
+  background-color: #ff2851;
+  color: #fff;
+  align-self: flex-end;
+  margin-bottom: 8px;
+}
+
+.message-bubble:last-child {
+  margin-bottom: 0;
+}
+
+.message-bubble p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.typing-indicator span {
+  display: block;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
+  background-color: #ccc;
+  margin-bottom: 4px;
+  animation: typing-indicator-animation 0.6s infinite;
+}
+
+@keyframes typing-indicator-animation {
+  0% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.4;
+  }
 }
 
 .cs-button--attachment {
@@ -30,4 +139,4 @@ body {
   flex-grow: 0;
   margin-left: .3rem;
   width: 100%;
-}
+} 
