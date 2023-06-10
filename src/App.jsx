@@ -2,8 +2,15 @@ import { useState } from 'react'
 import './App.css'
 import styles from '@chatscope/chat-ui-kit-styles/dist/default/styles.min.css';
 import { MainContainer, ChatContainer, MessageList, Message, MessageInput, TypingIndicator } from '@chatscope/chat-ui-kit-react';
+import { Configuration, OpenAIApi } from 'openai';
+
 
 const API_KEY = import.meta.env.VITE_GPT_API_KEY
+
+const configuration = new Configuration({
+  apiKey: API_KEY
+});
+const openai = new OpenAIApi(configuration);
 
 function App() {
   const [typing, setTyping] = useState(false)
@@ -36,40 +43,27 @@ function App() {
       else role = "user"
       return { role: role, content: msgObj.message }
     })
-
-    // const systemMessage = {
-    //   role: "system",
-    //   content: "Explain like iam freshman."
-    // }
-
-    const apiRequestBody = {
-      "model": "gpt-3.5-turbo",
-      "messages": [
-        // systemMessage,
-        ...msgsForGpt
-      ]
-    }
-
-    await fetch("https://api.openai.com/v1/chat/completions",
-      {
-        method: "POST",
-        headers: {
-          "Authorization": "Bearer " + API_KEY,
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(apiRequestBody)
-      }).then(data => {
-        return data.json()
-      }).then(data => {
-        setMessages([
-          ...chat,
-          {
-            message: data.choices[0].message.content,
-            sender: "ChatGPT"
-          }
-        ])
-        setTyping(false)
+    
+    try {
+      const response = await openai.createChatCompletion({
+        model: 'gpt-3.5-turbo',
+        messages: [...msgsForGpt],
       })
+      setMessages([
+        ...chat,
+        {
+          message: response.data.choices[0].message.content,
+          sender: "ChatGPT"
+        }
+      ])
+    } catch (error) {
+      if (error.response) {
+        console.error(error.response.status, error.response.data);
+      } else {
+        console.error(`Error with OpenAI API request: ${error.message}`);
+      }
+    }
+    setTyping(false)
   }
 
   return (
