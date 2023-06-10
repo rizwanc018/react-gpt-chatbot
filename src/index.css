@@ -1,3 +1,33 @@
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
+
+body {
+  background-color: hsla(240, 100%, 10%);
+}
+
+.cs-main-container {
+  border-radius: 7px;
+}
+
+.msglist {
+  background-color: rgb(54, 52, 52);
+}
+
+.cs-chat-container {
+  border-radius: 50%;
+}
+
+.cs-button--attachment {
+  display: none;
+}
+
+.cs-message-input {
+  padding: 1rem;
+}
+
+.cs-message-input__content-editor-wrapper {
+  flex-grow: 0;
+  margin-left: .3rem;
+  width: 100%;
+}
